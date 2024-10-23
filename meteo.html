@@ -35,7 +35,7 @@
 
 <script>
     // Fonction pour ajouter un petit commentaire en fonction de la chaleur
-    function updateWeatherComment(temperature) {
+    function weatherComment(temperature) {
         const weatherComment = document.getElementById('weatherComment');
 
         if (temperature < 15) {
@@ -77,7 +77,7 @@
         }
 
         // Mettre à jour le commentaire météo en fonction de la température
-        updateWeatherComment(temperature);
+        weatherComment(temperature);
     }
 </script>
 
