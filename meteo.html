@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conversion de température</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+</head>
+<body>
+    <div class="container-md">
+        
+        <h1 class="text-center pt-3 fw-bold text-decoration-underline fst-italic" style="font-family: Lucida;">Le Dernier Mois du Condamné</h1>
+        <h2 class="pt-3 fw-bold text-decoration-underline fst-italic" style="font-family: Lucida;">Jour n°2 - Conversion de température</h2>
+        <div class="row">
+            <div class="m-3 col-md-4">
+                <label for="temperatureInput" class="form-label">Entrez la température à convertir :</label>
+                <input type="number" class="form-control" id="temperatureInput" placeholder="Entrez la température" oninput="convertTemperature()">
+            </div>
+       
+            <div class="m-3 col-md-6">
+                <label for="conversionType" class="form-label">Sélectionnez le type de conversion :</label>
+                <select class="form-select" id="conversionType" onchange="convertTemperature()">
+                    <option value="CtoF">Celsius vers Fahrenheit</option>
+                    <option value="FtoC">Fahrenheit vers Celsius</option>
+                </select>
+            </div>
+        </div>
+
+        
+        <div class="text-center fw-bold" id="result"></div> 
+        <div class="text-center fw-bold" id="weatherComment" style="font-size: 1.5rem;"></div>
+        </div>
+        
+    </div>
+
+<script>
+    // Fonction pour ajouter un petit commentaire en fonction de la chaleur
+    function updateWeatherComment(temperature) {
+        const weatherComment = document.getElementById('weatherComment');
+
+        if (temperature < 15) {
+            weatherComment.innerHTML = "❄️ Il fait froid ! ❄️";
+            weatherComment.style.color = "blue";
+        } else if (temperature > 35) {
+            weatherComment.innerHTML = "🔥 Il fait un peu trop chaud ! 🔥";
+            weatherComment.style.color = "red";
+        } else {
+            weatherComment.innerHTML = "☀️ Il fait beau quel plaisir ! ☀️";
+            weatherComment.style.color = "orange";
+        }
+    }
+
+    // Fonction pour afficher le résultat de la conversion
+    function showResult(inputTemp, convertedTemp, fromUnit, toUnit) {
+        document.getElementById('result').innerHTML = `${inputTemp}°${fromUnit} est égal à ${convertedTemp.toFixed(2)}°${toUnit}.`;
+    }
+
+    // Fonction principale pour la conversion de température
+    function convertTemperature() {
+        const temperature = parseFloat(document.getElementById('temperatureInput').value);
+        const conversionType = document.getElementById('conversionType').value;
+        
+        if (isNaN(temperature)) {
+            document.getElementById('result').innerHTML = "Veuillez entrer une valeur numérique valide.";
+            document.getElementById('result').style.color = "orange";
+            document.getElementById('weatherComment').innerHTML = "";
+            return;
+        }
+
+        let convertedTemperature;
+        if (conversionType === "CtoF") {
+            convertedTemperature = (temperature * 9/5) + 32;
+            showResult(temperature, convertedTemperature, 'C', 'F');
+        } else {
+            convertedTemperature = (temperature - 32) * 5/9;
+            showResult(temperature, convertedTemperature, 'F', 'C');
+        }
+
+        // Mettre à jour le commentaire météo en fonction de la température
+        updateWeatherComment(temperature);
+    }
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+</body>
+</html>
